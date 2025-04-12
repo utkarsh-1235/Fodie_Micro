@@ -1,0 +1,10 @@
+node_modules/
+.env
+cartService/node_modules/
+cartService/.env
+orderService/node_modules/
+orderService/.env
+restaurantService/node_modules/
+restaurantService/.env
+userService/node_modules/
+userService/.env
