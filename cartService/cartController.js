@@ -1,5 +1,5 @@
 const CartModel = require('../cartService/cartSchema');
-const DishModel = require('../Models/DishSchema');
+const DishModel = require('../dishService/dishSchema');
 const Restaurantmodel = require('../restaurantService/restaurantSchema');
 const userModel = require('../userService/userSchema');
 
