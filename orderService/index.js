@@ -8,8 +8,10 @@ const Port = process.env.PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
-app.use('/api/orderservice',orderRoute);
+app.use('/api/orders',orderRoute);
+
 
 app.listen(Port, async(req,res)=>{
   console.log(`Order Service is running on ${Port}`);
