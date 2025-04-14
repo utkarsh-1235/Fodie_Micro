@@ -1,4 +1,5 @@
 const User = require('./userSchema');
+const axios = require('axios');
 
 const cookieOption = {
     maxAge: 7*24*60*60*1000, //7days
@@ -40,12 +41,12 @@ const signUp = async(req, res)=>{
           const token = await user.jwtToken();
           res.cookie('token', token, cookieOption)
 
-          res.status(200).json({
-            status: true,
-            message: 'Successfully register the user',
-            token: token,
-            user,
-          })
+        
+          await axios.post('http://localhost:3006/events',{
+            type: 'UserCreated',
+            User
+         })
+         
     }
     catch(err){
         
@@ -74,12 +75,19 @@ const login = async(req,res)=>{
         const token = await user.jwtToken();
     
         res.cookie('token',token,cookieOption);
-        res.status(200).json({
-            status: true,
-            message: 'User Loggedin Successfully',
-            token: token,
+
+        await axios.post('http://localhost:3006/events',{
+            type: 'User Logged in',
+            token,
             user
+
         })
+        // res.status(200).json({
+        //     status: true,
+        //     message: 'User Loggedin Successfully',
+        //     token: token,
+        //     user
+        // })
     }
     catch(err){
         res.status(500).json({
@@ -116,6 +124,7 @@ const addAddress = async(req, res)=>{
          })
          
          await user.save();
+       
          res.status(200).json({
             status: true,
             message: `Address added successfully ${user.name}`,
