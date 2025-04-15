@@ -66,6 +66,26 @@ const getAllRestaurant = async(req,res)=>{
         })
     }
 }
+
+const getRestaurantsById = async(req, res)=>{
+    try{
+        const restaurantId = req.params.restaurantId;
+        const restaurant = await RestaurantModel.findById(restaurantId);
+        if(!restaurant){
+            return res.status(401).json('Restaurant Not found')
+        }
+        res. status(200).json(restaurant);
+
+    }catch(err){
+        console.error("Error fetching restaurant:", err);
+        res.status(500).json({
+            status: false ,
+            message: err.message
+        })
+    }
+}
+
 module.exports = {addRestaurant,
-                  getAllRestaurant
+                  getAllRestaurant,
+                  getRestaurantsById
 };
