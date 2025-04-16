@@ -22,6 +22,34 @@ app.post('/events', async(req, res)=>{
   } catch (error) {
     console.error('Error sending to User Service:', error.message);
   }
+
+  try {
+    await axios.post('http://localhost:3005/api/dishes/events', event);
+    console.log('Event sent to Dish Service');
+  } catch (error) {
+    console.error('Error sending to Dish Service:', error.message);
+  }
+
+  try{
+    await axios.post('http://localhost:3002/api/carts/events', event);
+    console.log('Event sent to Cart Service')
+  }catch(error){
+    console.error('Error sending to Cart Service:', error.message);
+  }
+
+  try{
+    await axios.post('http://localhost:3003/api/orders/events', event);
+    console.log('Event sent to Order Service')
+  }catch(error){
+    console.error('Error sending to Order Service:', error.message);
+  }
+
+  try{
+    await axios.post('http://localhost:3004/api/restaurants/events', event);
+    console.log('Event sent to Restaurant Service')
+  }catch(error){
+    console.error('Error sending to Restaurant Service:', error.message);
+  }
 //    axios.post('http://localhost:3002/events', event);
 //    axios.post('http://localhost:3003/events', event);
 //    axios.post('http://localhost:3004/events', event);
