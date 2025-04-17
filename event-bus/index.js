@@ -20,7 +20,7 @@ app.post('/events', async(req, res)=>{
     await axios.post('http://localhost:3008/events', event);
     console.log('Event sent to Moderation Service', event)
   }catch(error){
-    console.error('Error sending to Restaurant Service:', error.message);
+    console.error('Error sending to Moderation Service:', error.message);
   }
   
   try {
@@ -28,6 +28,12 @@ app.post('/events', async(req, res)=>{
     console.log('Event sent to User Service', event);
   } catch (error) {
     console.error('Error sending to User Service:', error.message);
+  }
+  try{
+    await axios.post('http://localhost:3007/events', event);
+    console.log('Event sent to Query Service', event)
+  }catch(error){
+    console.error('Error sending to Query Service:', error.message);
   }
 
 //   try {
