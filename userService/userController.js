@@ -44,7 +44,7 @@ const signUp = async(req, res)=>{
         
           await axios.post('http://localhost:3006/events',{
             type: 'UserCreated',
-            User
+            data: user
          })
          
     }
