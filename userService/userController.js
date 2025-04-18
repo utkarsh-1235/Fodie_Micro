@@ -6,6 +6,16 @@ const cookieOption = {
     httpOnly: true,
     secure: true
 }
+
+// const emitEvent = async (type, data) => {
+//     try {
+//       await axios.post('http://localhost:3006/events', { type, data });
+//     } catch (err) {
+//       console.error(`Event ${type} failed:`, err.message);
+//     }
+//   };
+
+
 const signUp = async(req, res)=>{
     try{
         
@@ -77,10 +87,11 @@ const login = async(req,res)=>{
         res.cookie('token',token,cookieOption);
 
         await axios.post('http://localhost:3006/events',{
-            type: 'User Logged in',
-            token,
-            user
-
+            type: 'UserLoggedIn',
+            data: {
+                userId: user._id,
+                timestamps: new Date().toISOString()
+            }
         })
         // res.status(200).json({
         //     status: true,
