@@ -1,10 +1,10 @@
 const express = require('express');
 require('dotenv').config();
-const dbConnect = require('./src/db');
-const SignUpRpoute = require('./src/SignUpRoute');
-const LoginRoute = require('./src/LoginRoute');
-const addressRoute = require('./src/AddressRoute');
-const SignUp = require('./src/SignUpRoute');
+const dbConnect = require('./db');
+const SignUpRpoute = require('./SignUpRoute');
+const LoginRoute = require('./LoginRoute');
+const addressRoute = require('./AddressRoute');
+const SignUp = require('./SignUpRoute');
 const morgan = require('morgan');
 const app = express();
 const Port = process.env.PORT;
