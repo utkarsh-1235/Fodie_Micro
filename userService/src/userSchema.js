@@ -64,7 +64,7 @@ userSchema.methods = {
    //generating token
    jwtToken: async function(){
      return await JWT.sign(
-        {id: this.id, email: this.email},
+        {id: this._id, email: this.email},
         process.env.JWT_SECRET,
         { expiresIn: process.env.JWT_EXPIRY, }
      )
