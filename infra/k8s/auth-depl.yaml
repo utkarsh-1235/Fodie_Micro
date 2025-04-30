@@ -39,6 +39,15 @@ spec:
       containers:
         - name: auth
           image: utkarsh852/userservice
+          env:
+            - name: MONGO_URI
+              value: mongodb://mongo-service:27017/auth
+            - name: JWT_SECRET
+              value: secretkey
+            - name: JWT_EXPIRY
+              value: 1h
+            - name: PORT
+              value: "3001"
           ports:
             - containerPort: 3001
 ---

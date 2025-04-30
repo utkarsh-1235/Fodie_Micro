@@ -44,9 +44,9 @@ const userSchema = new Schema({
         }
     }],
     dish:[{
-        dish:{
-            type: Schema.Types.ObjectId,
-            ref: 'Dish'
+        dishId:{
+            type: String,
+            unique: true,
         }
     }],
     forgotPasswordToken:{
