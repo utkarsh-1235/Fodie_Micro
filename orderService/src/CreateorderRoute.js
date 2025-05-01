@@ -1,27 +1,27 @@
 const express = require('express');
-const { createOrder } = require('./orderController');
+const { verifyUserLoggedIn } = require('./Middleware/userAuth');
 
 const orderRoute = express();
 
-orderRoute.post('/add', async(req,res)=>{
+orderRoute.post('/add', verifyUserLoggedIn, async(req,res)=>{
     try{
         console.log(req.body);
-        const userId = req.body.user;
+        const user = req.user;
         const Items = req.body.items;
  
-        console.log(userId, Items);
-        if(!userId || !Items || Items.length === 0 ){
+        console.log(user, Items);
+        if(!user || !Items || Items.length === 0 ){
             return res.status(400).json('Please send Necessary details');
         }
 
-        const user = await userModel.findById(userId);
-        if(!user){
-            return res.status(401).json('User Not found');
-        }
+        // const user = await userModel.findById(userId);
+        // if(!user){
+        //     return res.status(401).json('User Not found');
+        // }
 
         const newOrder = new orderModel({
             user: {
-                userId: userId,
+                userId: user.id,
                 name: user.name,
                 email: user.email
             },
