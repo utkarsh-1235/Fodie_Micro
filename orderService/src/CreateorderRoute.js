@@ -1,5 +1,6 @@
 const express = require('express');
 const { verifyUserLoggedIn } = require('./Middleware/userAuth');
+const axios = require('axios');
 
 const orderRoute = express();
 
@@ -35,6 +36,13 @@ orderRoute.post('/add', verifyUserLoggedIn, async(req,res)=>{
             // totalPrice: totalPrice,
 
         })
+        await newOrder.save();
+
+          await axios.post('http://localhost:3006/events',{
+                    type: 'orderCreated',
+                    data: newOrder
+                 })
+                 
         
     }catch(err){
         res.status(500).json({
