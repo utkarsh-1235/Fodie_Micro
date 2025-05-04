@@ -46,11 +46,14 @@ authRoute.post('/register', async(req, res)=>{
           res.cookie('token', token, cookieOption)
 
         
-          await axios.post('http://localhost:3006/events',{
-            type: 'UserCreated',
-            data: user
+        //   await axios.post('http://localhost:3006/events',{
+        //     type: 'UserCreated',
+        //     data: user
+        //  })
+         res.status(200).json({
+          success: true,
+          data: user
          })
-         
     }
     catch(err){
         

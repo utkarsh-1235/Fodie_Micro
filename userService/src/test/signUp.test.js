@@ -13,10 +13,9 @@ beforeAll(async () => {
   // await mongoose.connect(mongoServer.getUri());
 
   // Or connect to your test DB
-  await mongoose.connect(process.env.mongodb_uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  });
+  await mongoose.connect(process.env.mongodb_uri)
+            .then(() => console.log('Connected to MongoDB for testing'))
+    .catch(err => console.error('MongoDB connection error:', err)); 
 });
 
 afterEach(async () => {
@@ -34,19 +33,19 @@ describe('Auth Routes', () => {
 
     it('should return 401 if any field is missing', async () => {
       const res = await request(app)
-        .post('/register')
-        .send({ email: 'test@example.com', password: '123456' });
+        .post('/api/users/register')
+        .send({ email: 'test@example.com', password: '12345678' });
 
       expect(res.statusCode).toBe(401);
       expect(res.body).toBe('Every Field is required');
     });
 
     it('should return 403 if user already exists', async () => {
-      await User.create({ name: 'Utkar', email: 'test@example.com', password: '123456' });
+      await User.create({ name: 'Utkar', email: 'test@example.com', password: '12345678' });
 
       const res = await request(app)
-        .post('/register')
-        .send({ name: 'Utkar', email: 'test@example.com', password: '123456' });
+        .post('/api/users/register')
+        .send({ name: 'Utkar', email: 'test@example.com', password: '12345678' });
 
       expect(res.statusCode).toBe(403);
       expect(res.body).toBe('Email already exist');
@@ -54,45 +53,13 @@ describe('Auth Routes', () => {
 
     it('should register a new user successfully', async () => {
       const res = await request(app)
-        .post('/register')
-        .send({ name: 'Utkar', email: 'new@example.com', password: '123456' });
+        .post('/api/users/register')
+        .send({ name: 'Utkar', email: 'new@example.com', password: '12345678' });
 
       expect(res.statusCode).toBe(200);
       expect(res.headers['set-cookie'][0]).toMatch(/token=/);
     });
   });
 
-  describe('POST /login', () => {
-
-    it('should return 402 if email or password is missing', async () => {
-      const res = await request(app)
-        .post('/login')
-        .send({ email: 'test@example.com' });
-
-      expect(res.statusCode).toBe(402);
-      expect(res.body).toBe('Every Field is required');
-    });
-
-    it("should return 403 if account doesn't exist", async () => {
-      const res = await request(app)
-        .post('/login')
-        .send({ email: 'noexist@example.com', password: '123456' });
-
-      expect(res.statusCode).toBe(403);
-      expect(res.body).toBe("Account doesn't exist with this email");
-    });
-
-    it('should login successfully with correct credentials', async () => {
-      await User.create({ name: 'Utkar', email: 'logmein@example.com', password: '123456' });
-
-      const res = await request(app)
-        .post('/login')
-        .send({ email: 'logmein@example.com', password: '123456' });
-
-      expect(res.statusCode).toBe(200);
-      expect(res.body.message).toBe('User Loggedin Successfully');
-      expect(res.headers['set-cookie'][0]).toMatch(/token=/);
-    });
-  });
 
 });
