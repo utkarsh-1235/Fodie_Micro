@@ -38,15 +38,13 @@ const userSchema = new Schema({
         }
     ],
     order:[{
-        order: {
-            type: Schema.Types.ObjectId,
-            ref: 'Order'
+        orderId: {
+            type: String
         }
     }],
     dish:[{
         dishId:{
             type: String,
-            unique: true,
         }
     }],
     forgotPasswordToken:{
