@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "publish": "ts-node-dev --rs --notify false src/publisher.js",
-  "listen": "ts-node-dev --rs --notify false src/listener.js"
+  "publish": "node ./src/publisher.js",
+    "listen": "node ./src/listener.js"
 },
   "keywords": [],
   "author": "",
