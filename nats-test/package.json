@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "publish": "node ./publish.js",
-    "listen": "node ./listener.js"
+    "listener": "node ./listener.js"
   },
   "keywords": [],
   "author": "",
