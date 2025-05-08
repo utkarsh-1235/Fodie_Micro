@@ -9,6 +9,7 @@ orderRoute.post('/add', verifyUserLoggedIn, async(req,res)=>{
         console.log(req.body);
         const user = req.user;
         const Items = req.body.items;
+        const address = req.body.address;
  
         console.log(user, Items);
         if(!user || !Items || Items.length === 0 ){
@@ -24,7 +25,8 @@ orderRoute.post('/add', verifyUserLoggedIn, async(req,res)=>{
             user: {
                 userId: user.id,
                 name: user.name,
-                email: user.email
+                email: user.email,
+                address: address
             },
             items: Items.map((item)=>({
                 dish:{
