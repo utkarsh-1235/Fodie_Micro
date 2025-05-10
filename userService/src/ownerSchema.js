@@ -33,16 +33,37 @@ const ownerSchema = new Schema({
         }
     ],
     documents: {
-        fssaiLicense: String,
-        gstNumber: String
+        fssaiLicense: {
+            type: String
+        },
+        gstNumber: {
+            type: String
+        }
       },
-      isVerified: Boolean,
-      isActive: Boolean
+      isVerified: {
+        type: Boolean,
+        default: false
+    } ,
+      isActive: {
+        type: Boolean,
+        default: false
+      }
     
   
 },{
     timestamps: true
 })
 
+
+ownerSchema.methods = {
+   //generating token
+   jwtToken: async function(){
+     return await JWT.sign(
+        {id: this._id, name: this.name, email: this.email},
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_EXPIRY, }
+     )
+   }
+}
 const ownermodel = model('owner', ownerSchema);
 module.expoerts = ownermodel;
