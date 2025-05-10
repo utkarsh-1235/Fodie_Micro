@@ -47,6 +47,9 @@ const userSchema = new Schema({
             type: String,
         }
     }],
+    isVerified: {
+        type: Boolean,
+    },
     forgotPasswordToken:{
         type: String
     },
