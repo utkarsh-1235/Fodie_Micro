@@ -18,30 +18,15 @@ const orderSchema = new Schema({
     },
     address:{
         type: String,
-        required: true
+        
     }
    
   },
   items: [
     {
-        dish:{
-            dishId: {
-                type: String,
-                required: true,
-                unique: true
-            },
-            name: {
-                type: String,
-                required: true
-            },
-            image: {
-                type: String,
-                required: true
-            },
-            price: {
-                type: Number,
-                required: true
-            }
+        dishId: {
+          type: String,
+          required: true
         }
     }
   ],
