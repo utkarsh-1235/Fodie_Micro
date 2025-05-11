@@ -1,13 +1,12 @@
 const request = require('supertest');
 const app = require('../index'); // Make sure your express app is exported from here
 const User = require('../userSchema');
+const dbConnect = require('../db'); // Adjust the path if needed
 const mongoose = require('mongoose');
 require('dotenv').config();
 
 beforeAll(async () => {
-  await mongoose.connect(process.env.mongodb_uri)
-    .then(() => console.log('Connected to MongoDB for testing'))
-    .catch(err => console.error('MongoDB connection error:', err));
+  await dbConnect();
 });
 
 afterEach(async () => {
@@ -32,25 +31,25 @@ describe('Auth Routes - POST /login', () => {
   it('should return 403 if user does not exist', async () => {
     const res = await request(app)
       .post('/api/users/login')
-      .send({ email: 'nouser@example.com', password: '12345678' });
+      .send({ email: 'nouser@example.com', password: 'somepassword' });
 
     expect(res.statusCode).toBe(403);
     expect(res.body).toBe("Account doesn't exist with this email");
   });
 
   it('should login successfully and return token', async () => {
-    // Create user directly in DB with hashed password
-    const user = new User({ name: 'Utkar', email: 'user@example.com', password: '12345678' });
+    // Create user directly in DB
+    const user = new User({ name: 'LoginUser', email: 'loginuser@example.com', password: 'mypassword' });
     await user.save();
 
     const res = await request(app)
       .post('/api/users/login')
-      .send({ email: 'user@example.com', password: '12345678' });
+      .send({ email: 'loginuser@example.com', password: 'mypassword' });
 
     expect(res.statusCode).toBe(200);
     expect(res.body.status).toBe(true);
     expect(res.body.token).toBeDefined();
-    expect(res.body.user.email).toBe('user@example.com');
+    expect(res.body.user.email).toBe('loginuser@example.com');
     expect(res.headers['set-cookie'][0]).toMatch(/token=/);
   });
 

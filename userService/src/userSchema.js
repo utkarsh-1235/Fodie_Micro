@@ -37,16 +37,16 @@ const userSchema = new Schema({
             address: String
         }
     ],
-    order:[{
-        orderId: {
-            type: String
-        }
-    }],
-    dish:[{
-        dishId:{
-            type: String,
-        }
-    }],
+    // order:[{
+    //     orderId: {
+    //         type: String
+    //     }
+    // }],
+    // dish:[{
+    //     dishId:{
+    //         type: String,
+    //     }
+    // }],
     isVerified: {
         type: Boolean,
     },

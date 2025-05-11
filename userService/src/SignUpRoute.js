@@ -39,7 +39,7 @@ authRoute.post('/register', async(req, res)=>{
             return res.status(400).json('User registration failed, please try again')
           }
          
-          await user.save();
+          // await user.save();
 
           user.password = undefined;
           const token = await user.jwtToken();
